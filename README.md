@@ -22,7 +22,7 @@ Still trying to figure out fusion and how to model the parts, wiring in KiCad is
 
 4x  M3 Heatset
 
-9x diodes
+9x 1N4148 Diodes 
 
 
 
