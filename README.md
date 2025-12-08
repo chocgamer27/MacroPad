@@ -10,7 +10,7 @@ Still trying to figure out fusion and how to model the parts, wiring in KiCad is
 
 # Bom
 
-4x  LED_SMD:LED_SK6812MINI_PLCC4_3.5x3.5mm_P1.75mm
+9x  LED_SMD:LED_SK6812MINI_PLCC4_3.5x3.5mm_P1.75mm
 
 9x  Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB
 
@@ -21,3 +21,8 @@ Still trying to figure out fusion and how to model the parts, wiring in KiCad is
 4x  M3x16 Bolt
 
 4x  M3 Heatset
+
+9x diodes
+
+
+
