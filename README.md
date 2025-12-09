@@ -3,9 +3,7 @@ A custom macro pad
 Made by chocolate guy
 
 <img width="1091" height="638" alt="image" src="https://github.com/user-attachments/assets/8abc3fca-a110-4f9e-81cf-8ab248d2b104" />
-
-<img width="731" height="678" alt="image" src="https://github.com/user-attachments/assets/e2d4c06c-1cec-40e3-b5a7-72d5426309b0" />
-
+<img width="763" height="770" alt="image" src="https://github.com/user-attachments/assets/78078d9b-2eb4-45fd-a78e-057f8d7b2a0d" />
 <img width="1493" height="685" alt="image" src="https://github.com/user-attachments/assets/08131ce1-4c7f-4fe9-8a8a-142c2359f194" />
 
 
