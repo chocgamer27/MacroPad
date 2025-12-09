@@ -2,7 +2,7 @@
 A custom macro pad 
 Made by chocolate guy
 
-<img width="1315" height="763" alt="image" src="https://github.com/user-attachments/assets/0c63f749-548f-4fc2-ab2b-54dcc8bd4d4e" />
+<img width="1091" height="638" alt="image" src="https://github.com/user-attachments/assets/8abc3fca-a110-4f9e-81cf-8ab248d2b104" />
 <img width="855" height="803" alt="image" src="https://github.com/user-attachments/assets/f258c125-756c-419a-8dda-f66babecdd23" />
 <img width="1493" height="685" alt="image" src="https://github.com/user-attachments/assets/08131ce1-4c7f-4fe9-8a8a-142c2359f194" />
 
