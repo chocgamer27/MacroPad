@@ -1,61 +1,89 @@
-from machine import Pin, I2C
-import time
-import ssd1306
+import board
+import supervisor
 
-# ---------- OLED ----------
-i2c = I2C(0, scl=Pin(7), sda=Pin(6))
-oled = ssd1306.SSD1306_I2C(128, 32, i2c)
+# KMK imports
+from kmk.kmk_keyboard import KMKKeyboard
+from kmk.scanners.keypad import KeysScanner
+from kmk.keys import KC
+from kmk.modules.macros import Macros, Press, Release, Tap
+from kmk.modules.rgb import RGB
 
-# ---------- ENCODER ----------
-enc_a = Pin(28, Pin.IN, Pin.PULL_UP)
-enc_b = Pin(29, Pin.IN, Pin.PULL_UP)
-last_a = enc_a.value()
+keyboard = KMKKeyboard()
 
-# ---------- BUTTONS ----------
-sw1 = Pin(3, Pin.IN, Pin.PULL_UP)
-sw2 = Pin(4, Pin.IN, Pin.PULL_UP)
+# --------------------------
+#  RGB LEDs (SK6812 MINI-E)
+# --------------------------
 
-# ---------- STATE ----------
-mode = 0   # 0 = play, 1 = time set (mode 2)
-minutes = 0  # 00:00
-last_min_tick = time.ticks_ms()
-last_toggle = 0
+rgb = RGB(
+    pixel_pin=board.D0,      # your LED DIN pin
+    num_pixels=2,            # 2 strips × 2 LEDs each
+    hue_default=0,           # red
+    sat_default=255,
+    val_default=40,          # brightness
+    animation_mode=1,        # breathing
+)
 
-# ---------- HELPERS ----------
-def draw_time():
-    h = minutes // 60
-    m = minutes % 60
-    oled.fill(0)
-    oled.text(f"{h:02d}:{m:02d}", 32, 12)
-    oled.show()
+keyboard.modules.append(rgb)
 
-draw_time()
+# --------------------------
+#  MACRO ENGINE
+# --------------------------
 
-# ---------- MAIN ----------
-while True:
-    now = time.ticks_ms()
+macros = Macros()
+keyboard.modules.append(macros)
 
-    # ----- minute ticker -----
-    if time.ticks_diff(now, last_min_tick) >= 60000:
-        minutes = (minutes + 1) % 1440
-        last_min_tick = now
-        draw_time()
+# --------------------------
+#  SWITCH INPUT PINS
+#  Based on your schematic, example:
+#  GP1–GP9  → board.D1 .. board.D9
+# --------------------------
 
-    # ----- mode toggle (SW1 + SW2) -----
-    if not sw1.value() and not sw2.value():
-        if time.ticks_diff(now, last_toggle) > 500:
-            mode = 1 - mode
-            last_toggle = now
-        time.sleep_ms(200)
+PINS = [
+    board.D1,
+    board.D2,
+    board.D3,
+    board.D4,
+    board.D5,
+    board.D6,
+    board.D7,
+    board.D8,
+    board.D9,
+]
 
-    # ----- encoder -----
-    a = enc_a.value()
-    if a != last_a:
-        step = 1 if enc_b.value() != a else -1
+keyboard.matrix = KeysScanner(
+    pins=PINS,
+    value_when_pressed=False,  # switches pull to GND
+)
 
-        if mode == 1:  # TIME ADJUST MODE
-            minutes = (minutes + step) % 1440
-            draw_time()
+# --------------------------
+#  KEYMAP (9 keys)
+#  You can replace these with anything
+#  https://github.com/KMKfw/kmk_firmware/blob/main/docs/en/keycodes.md
+# --------------------------
 
-        last_a = a
-        time.sleep_ms(3)
+keyboard.keymap = [
+    [
+        KC.A,             # key 1
+        KC.B,             # key 2
+        KC.C,             # key 3
+        KC.D,             # key 4
+        KC.E,             # key 5
+        KC.F,             # key 6
+        KC.G,             # key 7
+        KC.H,             # key 8
+
+        # key 9 = macro example
+        KC.MACRO(
+            Press(KC.LCTRL),
+            Tap(KC.S),
+            Release(KC.LCTRL)
+        ),
+    ]
+]
+
+# --------------------------
+#  START KMK
+# --------------------------
+
+if __name__ == '__main__':
+    keyboard.go()
